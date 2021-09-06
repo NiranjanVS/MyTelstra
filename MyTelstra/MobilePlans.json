@@ -1,0 +1,73 @@
+[{
+  "_id": "TELMOB20210001",
+  "duration": "28",
+  "data": "56",
+  "voice": "1000",
+  "sms": "100",
+  "price": "199",
+  "plan": "TELSTRA 199"
+},{
+  "_id": "TELMOB20210002",
+  "duration": "56",
+  "data": "112",
+  "voice": "2000",
+  "sms": "100",
+  "price": "399",
+  "plan": "TELSTRA 399"
+},{
+  "_id": "TELMOB20210003",
+  "duration": "84",
+  "data": "168",
+  "voice": "3000",
+  "sms": "100",
+  "price": "599",
+  "plan": "TELSTRA 599"
+},{
+  "_id": "TELMOB20210004",
+  "duration": "28",
+  "data": "42",
+  "voice": "1000",
+  "sms": "100",
+  "price": "149",
+  "plan": "TELSTRA 149"
+},{
+  "_id": "TELMOB20210005",
+  "duration": "56",
+  "data": "84",
+  "voice": "2000",
+  "sms": "100",
+  "price": "349",
+  "plan": "TELSTRA 349"
+},{
+  "_id": "TELMOB20210006",
+  "duration": "84",
+  "data": "126",
+  "voice": "3000",
+  "sms": "100",
+  "price": "555",
+  "plan": "TELSTRA 555"
+},{
+  "_id": "TELMOB20210007",
+  "duration": "14",
+  "data": "14",
+  "voice": "500",
+  "sms": "100",
+  "price": "59",
+  "plan": "TELSTRA 49"
+},{
+  "_id": "TELMOB20210008",
+  "duration": "28",
+  "data": "28",
+  "voice": "1000",
+  "sms": "100",
+  "price": "99",
+  "plan": "TELSTRA 99"
+},{
+  "_id": "TELMOB20210009",
+  "duration": "56",
+  "data": "56",
+  "voice": "2000",
+  "sms": "100",
+  "price": "149",
+  "plan": "TELSTRA 149"
+}]

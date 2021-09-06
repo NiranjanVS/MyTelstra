@@ -1,0 +1,151 @@
+[{
+  "_id": "7485596142",
+  "username": "Niranjan V S",
+  "planshistory": [
+    {
+      "planID": "TELMOB20210001",
+      "dateOfRecharge": "24/04/2021",
+      "dateOfExpiry": "22/05/2021"
+    },
+    {
+      "planID": "TELMOB20210002",
+      "dateOfRecharge": "23/05/2021",
+      "dateOfExpiry": "20/06/2021"
+    },
+    {
+      "planID": "TELMOB20210004",
+      "dateOfRecharge": "28/08/2021",
+      "dateOfExpiry": "25/09/2021"
+    }
+  ],
+  "activeplan": {
+    "planID": "TELMOB20210004",
+    "dateOfRecharge": "28/08/2021",
+    "dateOfExpiry": "25/09/2021"
+  },
+  "dataremaining": 42,
+  "voiceremaining": 1000,
+  "smsremaining": 100,
+  "_class": "com.mytelstra.mobile.entity.UserInfo"
+},{
+  "_id": "9587436514",
+  "username": "Aishrith Rao",
+  "planshistory": [],
+  "dataremaining": null,
+  "voiceremaining": 0,
+  "smsremaining": 0
+},{
+  "_id": "8521476295",
+  "username": "Rohith Reddy",
+  "planshistory": [
+    {
+      "planID": "TELMOB20210002",
+      "dateOfRecharge": "23/05/2021",
+      "dateOfExpiry": "20/06/2021"
+    }
+  ],
+  "activeplan": {
+    "planID": "TELMOB20210002",
+    "dateOfRecharge": "23/05/2021",
+    "dateOfExpiry": "20/06/2021"
+  },
+  "dataremaining": 49.1,
+  "voiceremaining": 900,
+  "smsremaining": 76
+},{
+  "_id": "9987748625",
+  "username": "Raghavendra J C",
+  "planshistory": [
+    {
+      "planID": "TELMOB20210001",
+      "dateOfRecharge": "28/08/2021",
+      "dateOfExpiry": "25/09/2021"
+    }
+  ],
+  "activeplan": {
+    "planID": "TELMOB20210001",
+    "dateOfRecharge": "28/08/2021",
+    "dateOfExpiry": "25/09/2021"
+  },
+  "dataremaining": 56,
+  "voiceremaining": 1000,
+  "smsremaining": 100,
+  "_class": "com.mytelstra.mobile.entity.UserInfo"
+},{
+  "_id": "8625741965",
+  "username": "Yamuna",
+  "planshistory": [],
+  "dataremaining": null,
+  "voiceremaining": 0,
+  "smsremaining": 0
+},{
+  "_id": "9958476147",
+  "username": "Raghavendra Ganapathi",
+  "planshistory": [],
+  "dataremaining": null,
+  "voiceremaining": 0,
+  "smsremaining": 0
+},{
+  "_id": "8573945618",
+  "username": "Shubha",
+  "planshistory": [],
+  "dataremaining": null,
+  "voiceremaining": 0,
+  "smsremaining": 0
+},{
+  "_id": "6849752864",
+  "username": "Obed Junias",
+  "planshistory": [
+    {
+      "planID": "TELMOB20210003",
+      "dateOfRecharge": "28/08/2021",
+      "dateOfExpiry": "20/11/2021"
+    }
+  ],
+  "activeplan": {
+    "planID": "TELMOB20210003",
+    "dateOfRecharge": "28/08/2021",
+    "dateOfExpiry": "20/11/2021"
+  },
+  "dataremaining": 168,
+  "voiceremaining": 3000,
+  "smsremaining": 100,
+  "_class": "com.mytelstra.mobile.entity.UserInfo"
+},{
+  "_id": "8579431085",
+  "username": "Tejaswini",
+  "planshistory": [
+    {
+      "planID": "TELMOB20210005",
+      "dateOfRecharge": "28/08/2021",
+      "dateOfExpiry": "23/10/2021"
+    }
+  ],
+  "activeplan": {
+    "planID": "TELMOB20210005",
+    "dateOfRecharge": "28/08/2021",
+    "dateOfExpiry": "23/10/2021"
+  },
+  "dataremaining": 84,
+  "voiceremaining": 2000,
+  "smsremaining": 100,
+  "_class": "com.mytelstra.mobile.entity.UserInfo"
+},{
+  "_id": "8957617538",
+  "username": "Tarun M Krishna",
+  "planshistory": [
+    {
+      "planID": "TELMOB20210002",
+      "dateOfRecharge": "23/05/2021",
+      "dateOfExpiry": "20/06/2021"
+    }
+  ],
+  "activeplan": {
+    "planID": "TELMOB20210002",
+    "dateOfRecharge": "23/05/2021",
+    "dateOfExpiry": "20/06/2021"
+  },
+  "dataremaining": 53.9,
+  "voiceremaining": 1000,
+  "smsremaining": 100
+}]
