@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
       alignItems: 'baseline',
       marginBottom: theme.spacing(2),
+      spacing : 3
     },
     footer: {
       borderTop: `1px solid ${theme.palette.divider}`,
@@ -68,55 +70,57 @@ export default function Cardgrid(){
     const [plans, setState] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:8083/viewPlans")
+            .get("http://localhost:8083/currentPlan/10001")
             .then(response => setState(response.data))
     }, [])
     console.log(plans);
     return(
         <div>
             <Container maxWidth="md" component="main">
-                <Grid container  spacing={5} alignItems="flex-end">
+                <Grid container spacing={5} alignItems="flex-end">
                 {plans.map((plan) => (
                     // Enterprise card is full width at sm breakpoint
-                    <Grid item key={plan.plan} xs={12} sm={6} md={4}>
+                    <Grid item key={plan.planName} xs={12} sm={plan.plan === 'TELSTRA 149' ? 8 : 6} md={4}>
                     <Card>
                         <CardHeader
-                        title={plan.plan}
+                        title={plan.planName}
                         subheader={plan.subheader}
                         titleTypographyProps={{ align: 'center' }}
                         subheaderTypographyProps={{ align: 'center' }}
-                        action={plan.duration == '84' ? <StarIcon /> : null}
+                        //action={plan.duration == '84' ? <StarIcon /> : null}
                         className={classes.cardHeader}
                         />
                         <CardContent>
                             <div className={classes.cardPricing}>
-                                <Typography component="h2" variant="h3" color="textPrimary">
-                                {plan.price}
+                                <Typography  component="h6" variant="h8" color="textPrimary">
+                                Plan Expires On
                                 </Typography>
-                                <Typography variant="h6" color="textSecondary">
-                                ₹
+                            </div>
+                            <div className={classes.cardPricing}>
+                                <Typography  component="h5" variant="h5" color="textPrimary">
+                                    {moment(plan.dateOfExpiry, "DD/MM/YYYY").format('MMMM DD, YYYY')}
                                 </Typography>
                             </div>
                             <ul>
-                                {/* {plans.description.map((line) => (
-                                <Typography component="li" variant="subtitle1" align="center" key={line}>
-                                    {line}
-                                </Typography>
-                                ))} */}
                                 <div className={classes.cardPricing}>
-                                    <Typography component="h6" variant="h6" color="textPrimary">
-                                    {" " + plan.data+" "}
+                                    <Typography component="h7" variant="h6" color="textPrimary">
+                                    Plan Benefits are 
+                                    </Typography>
+                                </div>
+                                <div className={classes.cardPricing}>
+                                    <Typography component="h7" variant="h6" color="textPrimary">
+                                    {plan.data}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
-                                    GB of Data
+                                     GB of Data
                                     </Typography>
                                 </div>
                                 <div className={classes.cardPricing}>
                                     <Typography component="h6" variant="h6" color="textPrimary">
-                                    {" " + plan.voice+" "}
+                                    {plan.voice}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
-                                    Minutes of Voice Calls
+                                     Minutes of Voice Calls
                                     </Typography>
                                 </div>
                                 <div className={classes.cardPricing}>
@@ -124,16 +128,15 @@ export default function Cardgrid(){
                                     {plan.sms}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
-                                    {" "}
-                                    SMS
+                                     SMS
                                     </Typography>
                                 </div>
                                 <div className={classes.cardPricing}>
                                     <Typography variant="subtitle2" color="textSecondary">
-                                    Enjoy Plan for
+                                    Plan Validity :
                                     </Typography>
                                     <Typography component="h6" variant="h6" color="textPrimary">
-                                    {" " + plan.duration + " "}
+                                    {plan.duration}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
                                      Days
@@ -141,11 +144,6 @@ export default function Cardgrid(){
                                 </div>
                             </ul>
                         </CardContent>
-                        <CardActions>
-                        <Button fullWidth variant="outlined" color="primary">
-                            Buy now
-                        </Button>
-                        </CardActions>
                     </Card>
                     </Grid>
                 ))}

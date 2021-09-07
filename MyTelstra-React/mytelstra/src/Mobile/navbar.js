@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FadeMenu from './Menu.js'
 import MobileMenu from './MobileMenu.js';
 import { Container } from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -64,8 +65,9 @@ export default function Indexnavbar(){
         <Container>
             <AppBar position="fixed" color="default" elevation={0} className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <img src = "/media/t-logo.png" alt = "logo">
-                    </img>
+                    <Link to="/">
+                      <img src = "/media/t-logo.png" alt = "logo"></img>
+                    </Link>
                     <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
                     </Typography>
                     <MobileMenu menuName = "Mobile" className = {classes.link}/>

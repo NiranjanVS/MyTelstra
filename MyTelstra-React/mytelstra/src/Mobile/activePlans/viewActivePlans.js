@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import FadeMenu from 'Mobile/Menu';
-import Cardgrid from 'Mobile/viewPlans/planCards';
+import Cardgrid from 'Mobile/activePlans/planCards';
 import IndexNavbar from 'Mobile/navbar';
 
 
@@ -66,17 +66,17 @@ const useStyles = makeStyles((theme) => ({
   },
   footer: {
     borderTop: `1px solid ${theme.palette.divider}`,
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(8),
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
     [theme.breakpoints.up('sm')]: {
-      paddingTop: theme.spacing(3),
+      paddingTop: theme.spacing(6),
       paddingBottom: theme.spacing(6),
     },
   },
 }));
 
-export default function ViewMobilePlans() {
+export default function ViewActiveMobilePlans() {
   const classes = useStyles();
 
   return (
@@ -88,9 +88,9 @@ export default function ViewMobilePlans() {
           Mobile
         </Typography>
         <Typography variant="h5" align="center" color="textSecondary" component="p">
-          Plans and Pricing
+          Your Active Plans Are
         </Typography>
-      </Container >
+      </Container>
       {/* End hero unit */}
       <Cardgrid />
       {/* Footer */}

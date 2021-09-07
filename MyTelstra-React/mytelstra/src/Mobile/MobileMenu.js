@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import { Style } from '@material-ui/icons';
 
+
 export default function MobileMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -34,10 +35,10 @@ export default function MobileMenu(props) {
         onClick={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>View Plans</MenuItem>
-        <MenuItem onClick={handleClose}>Current Plan</MenuItem>
+        <MenuItem component='a' href='/mobile/viewplans'>View Plans</MenuItem>
+        <MenuItem component='a' href='/mobile/activeplans'>Active Plans</MenuItem>
         <MenuItem onClick={handleClose}>Check Current Balance</MenuItem>
-        <MenuItem onClick={handleClose}>Payment History</MenuItem>
+        <MenuItem component='a' href='/mobile/rechargehistory'>Payment History</MenuItem>
       </Menu>
     </div>
   );

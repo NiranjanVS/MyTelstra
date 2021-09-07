@@ -1,9 +1,11 @@
 import React from "react";
-import MaterialTable from "material-table";
+import MaterialTable, { MTableBody, MTableBodyRow } from "material-table";
 import { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
+import { data } from "jquery";
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -44,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
     footer: {
       borderTop: `1px solid ${theme.palette.divider}`,
-      marginTop: theme.spacing(8),
+      marginTop: theme.spacing(3),
       paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
@@ -56,38 +58,32 @@ const useStyles = makeStyles((theme) => ({
 
 //₹
 
-export default function Table(){
+export default function Table(props){
     const classes = useStyles();
     const [plans, setState] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:8083/rechargeHistory/10010")
+            .get('http://localhost:8083/rechargeHistory/'+props.message)
             .then(response => setState(response.data))
     }, [])
     console.log(plans);
-    const columns=[
-        {
-            title:'Plan ID', field:'planID'
-        },
-        {
-            title:'Date of Recharge', field:'dateOfRecharge'
-        },
-        {
-            title:'Date of Expiry', field:'dateOfExpiry'
-        },
-        {
-            title:'Transaction ID', field:'transactionId'
-        },
-        {
-            title:'Payment Mode', field:'paymentMode'
-        }
-    ]
     return(
         <div>
             <Container maxWidth="xl" component="main">
-                  <MaterialTable title="Transaction History"
+                  <MaterialTable title=""
+                      onRowClick = {(event,rowData) => alert(rowData.planID)}
                       data = {plans}
-                      columns = {columns}
+                      columns = {[
+                        {title:'Plan ID', field:'planID'},
+                        {title:'Date of Recharge', field:'dateOfRecharge'},
+                        {title:'Date of Expiry', field:'dateOfExpiry'},
+                        {title:'Transaction ID', field:'transactionId'},
+                        {title:'Payment Mode', field:'paymentMode'}
+                      ]}
+                      options = {{
+                        exportButton:true,
+                        pageSizeOptions:[5]
+                      }}
                   />
             </Container>
         </div>

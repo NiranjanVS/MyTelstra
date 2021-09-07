@@ -50,7 +50,7 @@ function Copyright() {
       float: 'left'
     },
     heroContent: {
-      padding: theme.spacing(8, 0, 6),
+      padding: theme.spacing(10, 0, 6),
     },
     cardHeader: {
       backgroundColor:
@@ -63,20 +63,16 @@ function Copyright() {
       marginBottom: theme.spacing(2),
     },
     footer: {
-      borderTop: `1px solid ${theme.palette.divider}`,
-      marginTop: theme.spacing(8),
-      paddingTop: theme.spacing(3),
       paddingBottom: theme.spacing(3),
       [theme.breakpoints.up('sm')]: {
-        paddingTop: theme.spacing(6),
-        paddingBottom: theme.spacing(6),
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
       },
     },
   }));
   
-  export default function ViewTransactionHistory() {
+  export default function ViewTransactionHistory(match) {
     const classes = useStyle();
-  
     return (
       <React.Fragment>
         <CssBaseline />
@@ -87,7 +83,7 @@ function Copyright() {
           </Typography>
         </Container>
         {/* End hero unit */}
-        <Table/>
+        <Table message={match.match.params.id}/>
         {/* Footer */}
         <Container maxWidth="md" component="footer" className={classes.footer}>
           <Box mt={5}>
