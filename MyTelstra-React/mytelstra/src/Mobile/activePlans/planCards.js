@@ -68,12 +68,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Cardgrid(){
     const classes = useStyles();
     const [plans, setState] = useState([]);
+    const [details, setDetails] = useState({});
     useEffect(() => {
         axios
-            .get("http://localhost:8083/currentPlan/10001")
+            .get("http://localhost:8083/currentPlan/10012")
             .then(response => setState(response.data))
     }, [])
+
     console.log(plans);
+
     return(
         <div>
             <Container maxWidth="md" component="main">
@@ -83,11 +86,10 @@ export default function Cardgrid(){
                     <Grid item key={plan.planName} xs={12} sm={plan.plan === 'TELSTRA 149' ? 8 : 6} md={4}>
                     <Card>
                         <CardHeader
-                        title={plan.planName}
-                        subheader={plan.subheader}
+                        title={plan.planInfo.plan}
+                        subheader={"Recharged On " + plan.dateOfRecharge}
                         titleTypographyProps={{ align: 'center' }}
                         subheaderTypographyProps={{ align: 'center' }}
-                        //action={plan.duration == '84' ? <StarIcon /> : null}
                         className={classes.cardHeader}
                         />
                         <CardContent>
@@ -109,7 +111,7 @@ export default function Cardgrid(){
                                 </div>
                                 <div className={classes.cardPricing}>
                                     <Typography component="h7" variant="h6" color="textPrimary">
-                                    {plan.data}
+                                    {plan.planInfo.data}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
                                      GB of Data
@@ -117,7 +119,7 @@ export default function Cardgrid(){
                                 </div>
                                 <div className={classes.cardPricing}>
                                     <Typography component="h6" variant="h6" color="textPrimary">
-                                    {plan.voice}
+                                    {plan.planInfo.voice}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
                                      Minutes of Voice Calls
@@ -125,7 +127,7 @@ export default function Cardgrid(){
                                 </div>
                                 <div className={classes.cardPricing}>
                                     <Typography component="h6" variant="h6" color="textPrimary">
-                                    {plan.sms}
+                                    {plan.planInfo.sms}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
                                      SMS
@@ -136,7 +138,7 @@ export default function Cardgrid(){
                                     Plan Validity :
                                     </Typography>
                                     <Typography component="h6" variant="h6" color="textPrimary">
-                                    {plan.duration}
+                                    {plan.planInfo.duration}
                                     </Typography>
                                     <Typography variant="subtitle2" color="textSecondary">
                                      Days
