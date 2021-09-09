@@ -1,7 +1,5 @@
 package com.mytelstra.mobile.entity;
 
-
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="MobilePlans")
@@ -17,7 +15,6 @@ public class MobilePlans {
 	
 	public MobilePlans() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 

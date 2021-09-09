@@ -13,10 +13,16 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.mongodb.client.MongoClient;
+import com.mytelstra.mobile.entity.ActivePlan;
+import com.mytelstra.mobile.entity.Balance;
 import com.mytelstra.mobile.entity.MobilePlans;
 import com.mytelstra.mobile.entity.RechargeInfo;
+import com.mytelstra.mobile.entity.UsageInfo;
 import com.mytelstra.mobile.entity.UserInfo;
 import com.mytelstra.mobile.repository.MobileRepository;
 import com.mytelstra.mobile.repository.UserRepository;
@@ -35,66 +41,55 @@ public class MobileServicesImpl implements MobileServices{
 	private MongoClient client;
 
 	@Override
+	public boolean createNewUser(String userid) {
+		
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
+		if(userinfo.isPresent())
+			return false;
+		
+		UserInfo user = new UserInfo();
+		user.setId(userid);
+		user.setUsername(userid);
+		user.setMobilenumber(userid);
+		user.setPlanshistory(new ArrayList<>());
+		user.setActiveplan(new ArrayList<>());
+		user.setBalance(new Balance(0.0,0,0));
+		user.setUsage(new ArrayList<>());
+		userrepo.insert(user);
+		
+		return true;
+	}
+	
+	@Override
 	public List<MobilePlans> viewPlans() {
 		
 		List<MobilePlans> mobileplans = mobilerepo.findAll();
-		
-		for(MobilePlans p: mobileplans)
-			System.out.println(p);
-		
 		return mobileplans;
 	}
 
 	@Override
 	public List<UserInfo> userinfo() {
 		
-		List<UserInfo> userinfo = userrepo.findAll();
-		for(UserInfo u:userinfo)
-			System.out.println(u);
-		
+		List<UserInfo> userinfo = userrepo.findAll();		
 		return userinfo;
 	}
 
 	@Override
 	public List<RechargeInfo> userRechargeHistory(String id) {
-		// TODO Auto-generated method stub
 		Optional<UserInfo> userinfo = userrepo.findById(id);
-		List<RechargeInfo> rechargehistory = new ArrayList<RechargeInfo>();
-		
-		try {
-			rechargehistory = userinfo.get().getPlanshistory();
-		}catch(Exception e) {
-			//if the user not found with _id=id
-			System.out.println("No Such User Found");
-			rechargehistory.add(0,null);
+		if(!userinfo.isPresent())
 			return null;
-		}
-		/*List<MobilePlans> history = new ArrayList<MobilePlans>();
 		
-		
-		//if user exists and has no recharges history
-		if(rechargehistory.get(0)==null) {
-			System.out.println("No Data Found");
-			return new ArrayList<MobilePlans>();
-		}
-		
-		//if user id present and has recharges history, we fetch recharge details using Mobile data plan id
-		for(RechargeInfo s:rechargehistory) {
-			MobilePlans p = getMobilePlanById(s.getPlanId());
-			history.add(p);
-		}
-		return history;*/
-		return rechargehistory;
+		return userinfo.get().getPlanshistory();
 	}
 
 
 	@Override
 	public UserInfo getUserById(String id) {
-		// TODO Auto-generated method stub
 		Optional<UserInfo> userinfo = userrepo.findById(id);
 		if(!userinfo.isPresent())
 			return new UserInfo();
-		System.out.println(userinfo.get());
+		
 		return userinfo.get();
 	}
 
@@ -103,82 +98,74 @@ public class MobileServicesImpl implements MobileServices{
 		Optional<MobilePlans> planinfo = mobilerepo.findById(id);
 		if(!planinfo.isPresent())
 			return new MobilePlans();
-		System.out.println(planinfo.get());
+		
 		return planinfo.get();
 	}
 
 	@Override
-	public RechargeInfo getCurrentPlan(String id) {
+	public List<ActivePlan> getCurrentPlan(String id) {
 		Optional<UserInfo> userinfo = userrepo.findById(id);
 		if(!userinfo.isPresent() || userinfo.get().getActiveplan()==null)
-			//return null;
-			return new RechargeInfo();
-		System.out.println(userinfo.get().getActiveplan());
+			return new ArrayList<>();
+		
 		return userinfo.get().getActiveplan();
 	}
 
 	@Override
-	public Map<String, String> getCurrentBalance(String id) {
-		
-		Map<String,String> balances = new HashMap<String,String>();
-		balances.put("Data","0.0 GB");
-		balances.put("Voice","0");
-		balances.put("SMS","0");
-		
-		
+	public Balance getCurrentBalance(String id) {
+				
 		Optional<UserInfo> userinfo = userrepo.findById(id);
-		if(!userinfo.isPresent() || userinfo.get().getActiveplan()==null)
-			return balances;
-			//return new HashMap<String,String>();
-		//Map<String,String> balances = new HashMap<String,String>();
-		balances.put("Data",Double.toString(userinfo.get().getDataremaining())+" GB");
-		balances.put("Voice",Integer.toString(userinfo.get().getVoiceremaining()));
-		balances.put("SMS",Double.toString(userinfo.get().getSmsremaining()));
-		return balances;
+		if(!userinfo.isPresent())
+			return null;
+		
+		return userinfo.get().getBalance();
 	}
 
 	@Override
 	public String rechargeUserById(String userid, String planid) {
 		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		Optional<MobilePlans> planinfo  = mobilerepo.findById(planid);
-		if(!userinfo.isPresent())
-			return "No User Found";
+		
+		if(!userinfo.isPresent()) {
+			createNewUser(userid);
+			userinfo = userrepo.findById(userid);
+		}
+		
 		if(!planinfo.isPresent())
 			return "No Such Plans Exist";
+		
+		
 		UserInfo user = userinfo.get();
 		
 		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		Date todate = new Date();
 		String today = simpleDateFormat.format(new Date());
 		
-		Date currentPlanExpiry = null;
+		/*Date currentPlanExpiry = null;
 		
-		
+		Date todate = new Date();
 		if(user.getActiveplan()!=null) {
 
 			try {
 				currentPlanExpiry = simpleDateFormat.parse(user.getActiveplan().getDateOfExpiry());
 			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			if(todate.compareTo(currentPlanExpiry)<=0) {
-				return "Recharge not possible as you have an active plan\n"+"And Your current plan is\n"+mobilerepo.findById(user.getActiveplan().getPlanID()).get();
+				return "Recharge Failed  - You Have an Active Plan";
 			}
-		}
+		}*/
 		
 		
 		Calendar cal = Calendar.getInstance();
 		try {
 			cal.setTime(simpleDateFormat.parse(today));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		cal.add(Calendar.DAY_OF_MONTH, planinfo.get().getDuration());
 		
-		String Lastdate = simpleDateFormat.format(cal.getTime());
+		String lastDate = simpleDateFormat.format(cal.getTime());
 		
 		System.out.println(today);
 		System.out.println(planinfo.get().getDuration());
@@ -187,8 +174,8 @@ public class MobileServicesImpl implements MobileServices{
 		RechargeInfo rinfo = new RechargeInfo();
 		rinfo.setPlanID(planinfo.get().getId());
 		rinfo.setDateOfRecharge(today);
-		rinfo.setDateOfExpiry(Lastdate);
-		System.out.println(Lastdate);
+		rinfo.setDateOfExpiry(lastDate);
+		System.out.println(lastDate);
 		rinfo.setPaymentMode("online");
 		rinfo.setTransactionId(UUID.randomUUID().toString());
 		
@@ -196,17 +183,86 @@ public class MobileServicesImpl implements MobileServices{
 		history.add(rinfo);
 		user.setPlanshistory(history);
 		
-		user.setActiveplan(rinfo);
+		List<ActivePlan> activeplans = user.getActiveplan();
+		ActivePlan newplan = new ActivePlan();
+		newplan.setPlanInfo(planinfo.get());
+		newplan.setDateOfRecharge(today);
+		newplan.setDateOfExpiry(lastDate);
+		activeplans.add(newplan);
+		user.setActiveplan(activeplans);
 		
-		user.setDataremaining(planinfo.get().getData());
-		user.setVoiceremaining(planinfo.get().getVoice());
-		user.setSmsremaining(planinfo.get().getSms());
 		
+		Balance balance = new Balance();
+				
+		balance.setData((double) user.getBalance().getData()+planinfo.get().getData());
+		balance.setVoice(user.getBalance().getVoice()+planinfo.get().getVoice());
+		balance.setSms(user.getBalance().getSms()+planinfo.get().getSms());
+		
+		user.setBalance(balance);
 		
 		userrepo.save(user);
 		System.out.println(user);
 		
-		return "Recharge Successful\n"+userrepo.findById(userid).get();
+		return "Recharge Successful";
 	}
 
+	@Override
+	public List<UsageInfo> getUsageInfoById(String userid) {
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
+		if(!userinfo.isPresent())
+			return null;
+		return userinfo.get().getUsage();
+	}
+
+	@Override
+	public String addusage(Map<String,String> usage,String userid) {
+		
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
+		if(!userinfo.isPresent())
+			return "No user found";
+		
+		UsageInfo newusage = new UsageInfo();
+		newusage.setType(usage.get("type").toLowerCase());
+		
+		if(usage.get("type").equalsIgnoreCase("data")) {
+			if((userinfo.get().getBalance().getData()*1024 - Double.parseDouble(usage.get("quantity")))<0) {
+				return "You have Exhausted your data";
+			}
+			userinfo.get().getBalance().setData((userinfo.get().getBalance().getData()*1024 - Double.parseDouble(usage.get("quantity")))/1024);
+			newusage.setQuantity(usage.get("quantity")+" MB");
+		}
+		
+		else if(usage.get("type").equalsIgnoreCase("voice")) {
+			if((userinfo.get().getBalance().getVoice() - Integer.parseInt(usage.get("quantity")))<0) {
+				return "You have Exhausted your Voice Minutes";
+			}
+			userinfo.get().getBalance().setVoice(userinfo.get().getBalance().getVoice() - Integer.parseInt(usage.get("quantity")));
+			newusage.setQuantity(usage.get("quantity")+" Min");
+		}
+		
+		else if(usage.get("type").equalsIgnoreCase("sms")) {
+			if((userinfo.get().getBalance().getSms() - Integer.parseInt(usage.get("quantity")))<0) {
+				return "You have Exhausted your SMS";
+			}
+			userinfo.get().getBalance().setSms(userinfo.get().getBalance().getSms() - Integer.parseInt(usage.get("quantity")));
+			newusage.setQuantity(usage.get("quantity"));
+		}
+		
+		String pattern = "dd/MM/yyyy HH:mm:ss";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String today = simpleDateFormat.format((new Date()).getTime());
+		
+		newusage.setDate(today.split(" ")[0]);
+		newusage.setTime(today.split(" ")[1]);
+		
+		
+		System.out.println(today);
+		
+		userinfo.get().getUsage().add(newusage);
+		userrepo.save(userinfo.get());
+		
+		return "success";
+	}
+	
+	
 }

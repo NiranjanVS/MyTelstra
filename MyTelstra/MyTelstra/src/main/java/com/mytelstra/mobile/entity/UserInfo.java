@@ -10,79 +10,85 @@ public class UserInfo {
 	private String mobilenumber;
 	private String username;
 	private List<RechargeInfo> planshistory;
-	private RechargeInfo activeplan;
-	private double dataremaining;
-	private int voiceremaining;
-	private int smsremaining;
+	private List<ActivePlan> activeplan;
+	private Balance balance;
+	private List<UsageInfo> usage;
+	
 	public UserInfo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
+
 	public UserInfo(String id, String mobilenumber, String username, List<RechargeInfo> planshistory,
-			RechargeInfo activeplan, double dataremaining, int voiceremaining, int smsremaining) {
+			List<ActivePlan> activeplan, Balance balance, List<UsageInfo> usage) {
 		super();
 		this.id = id;
 		this.mobilenumber = mobilenumber;
 		this.username = username;
 		this.planshistory = planshistory;
 		this.activeplan = activeplan;
-		this.dataremaining = dataremaining;
-		this.voiceremaining = voiceremaining;
-		this.smsremaining = smsremaining;
+		this.balance = balance;
+		this.usage = usage;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getMobilenumber() {
 		return mobilenumber;
 	}
+
 	public void setMobilenumber(String mobilenumber) {
 		this.mobilenumber = mobilenumber;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public List<RechargeInfo> getPlanshistory() {
 		return planshistory;
 	}
+
 	public void setPlanshistory(List<RechargeInfo> planshistory) {
 		this.planshistory = planshistory;
 	}
-	public RechargeInfo getActiveplan() {
+
+	public List<ActivePlan> getActiveplan() {
 		return activeplan;
 	}
-	public void setActiveplan(RechargeInfo activeplan) {
+
+	public void setActiveplan(List<ActivePlan> activeplan) {
 		this.activeplan = activeplan;
 	}
-	public double getDataremaining() {
-		return dataremaining;
+
+	public Balance getBalance() {
+		return balance;
 	}
-	public void setDataremaining(double dataremaining) {
-		this.dataremaining = dataremaining;
+
+	public void setBalance(Balance balance) {
+		this.balance = balance;
 	}
-	public int getVoiceremaining() {
-		return voiceremaining;
+
+	public List<UsageInfo> getUsage() {
+		return usage;
 	}
-	public void setVoiceremaining(int voiceremaining) {
-		this.voiceremaining = voiceremaining;
+
+	public void setUsage(List<UsageInfo> usage) {
+		this.usage = usage;
 	}
-	public int getSmsremaining() {
-		return smsremaining;
-	}
-	public void setSmsremaining(int smsremaining) {
-		this.smsremaining = smsremaining;
-	}
+
 	@Override
 	public String toString() {
 		return "UserInfo [id=" + id + ", mobilenumber=" + mobilenumber + ", username=" + username + ", planshistory="
-				+ planshistory + ", activeplan=" + activeplan + ", dataremaining=" + dataremaining + ", voiceremaining="
-				+ voiceremaining + ", smsremaining=" + smsremaining + "]";
-	}	
-	
+				+ planshistory + ", activeplan=" + activeplan + ", balance=" + balance + ", usage=" + usage + "]";
+	}
 }

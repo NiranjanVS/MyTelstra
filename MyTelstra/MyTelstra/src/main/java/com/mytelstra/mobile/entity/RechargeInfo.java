@@ -11,7 +11,6 @@ public class RechargeInfo {
 	private String paymentMode;
 	public RechargeInfo() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public RechargeInfo(String planID, String dateOfRecharge, String dateOfExpiry, String transactionId,
 			String paymentMode) {

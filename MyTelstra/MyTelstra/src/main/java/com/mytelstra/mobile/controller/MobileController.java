@@ -2,96 +2,116 @@ package com.mytelstra.mobile.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mytelstra.mobile.entity.ActivePlan;
+import com.mytelstra.mobile.entity.Balance;
 import com.mytelstra.mobile.entity.MobilePlans;
 import com.mytelstra.mobile.entity.RechargeInfo;
+import com.mytelstra.mobile.entity.UsageInfo;
 import com.mytelstra.mobile.entity.UserInfo;
 import com.mytelstra.mobile.service.MobileServices;
 
 @RestController
+@RequestMapping("/")
 @CrossOrigin
 public class MobileController {
 	@Autowired
 	private MobileServices mobileServices;
 	
 	
-	@RequestMapping(value="/",method = RequestMethod.GET)
-	private String home() {
+	@GetMapping("/")
+	public String home() {
 		return "Mobile Services Here";
 	}
 	
-	@RequestMapping(value="/viewPlans",method = RequestMethod.GET)
+	@GetMapping("/viewPlans")
 	public List<MobilePlans> viewPlans(){
 		return mobileServices.viewPlans();
 	}
 	
-	@RequestMapping(value="/users", method = RequestMethod.GET)
+	@GetMapping("/users")
 	public List<UserInfo> users(){
 		return mobileServices.userinfo();
 	}
 	
-	/*@RequestMapping(value="/userDetails/{id}", method = RequestMethod.GET)
+	@GetMapping("/userDetails/{id}")
 	public UserInfo userdetailsByID(@PathVariable("id") String id){
-		return mobileServices.getUserById(id);
-	}*/
-	
-	@RequestMapping(value="/userDetails", method = RequestMethod.GET)
-	public UserInfo userdetails(@RequestBody String id){
 		return mobileServices.getUserById(id);
 	}
 	
-	@RequestMapping(value="/rechargeHistory/{id}", method = RequestMethod.GET)
+//	@GetMapping(value="/userDetails")
+//	public UserInfo userdetails(@RequestBody String id){
+//		return mobileServices.getUserById(id);
+//	}
+	
+	@GetMapping("/rechargeHistory/{id}")
 	public List<RechargeInfo> userrechargehistoryById(@PathVariable("id") String id){
 		return mobileServices.userRechargeHistory(id);
 	}
 	
-	@RequestMapping(value="/rechargeHistory", method = RequestMethod.GET)
-	public List<RechargeInfo> userrechargehistory(@RequestBody String id){
-		return mobileServices.userRechargeHistory(id);
-	}
+//	@GetMapping("/rechargeHistory")
+//	public List<RechargeInfo> userrechargehistory(@RequestBody String id){
+//		return mobileServices.userRechargeHistory(id);
+//	}
 	
-	/*@RequestMapping(value="/mobilePlan/{id}", method = RequestMethod.GET)
+	@GetMapping("/mobilePlan/{id}")
 	public MobilePlans viewPlanByID(@PathVariable("id") String id) {
 		return mobileServices.getMobilePlanById(id);
-	}*/
+	}
 	
-	/*@RequestMapping(value="/currentPlan/{id}",method = RequestMethod.GET)
-	public RechargeInfo getCurrentPlanById(@PathVariable("id") String id) {
-		return mobileServices.getCurrentPlan(id);
-	}*/
-	
-	@RequestMapping(value="/currentPlan",method = RequestMethod.GET)
-	public RechargeInfo getCurrentPlan(@RequestBody String id) {
+	@GetMapping("/currentPlan/{id}")
+	public List<ActivePlan> getCurrentPlanById(@PathVariable("id") String id) {
 		return mobileServices.getCurrentPlan(id);
 	}
 	
-	/*@RequestMapping(value="/balance/{id}",method = RequestMethod.GET)
-	public Map<String,String> getBalanceById(@PathVariable("id") String id) {
-		return mobileServices.getCurrentBalance(id);
-	}*/
+//	@GetMapping("/currentPlan")
+//	public List<ActivePlan> getCurrentPlan(@RequestBody Map<String,String> id) {
+//		return mobileServices.getCurrentPlan(id.get("id"));	
+//	}
 	
-	@RequestMapping(value="/balance",method = RequestMethod.GET)
-	public Map<String,String> getBalance(@RequestBody String id) {
+	@GetMapping("/balance/{id}")
+	public Balance getBalanceById(@PathVariable("id") String id) {
 		return mobileServices.getCurrentBalance(id);
 	}
 	
-	/*@RequestMapping(value="/recharge/{userid}/{planid}",method = RequestMethod.GET)
-	public String rechargeUserGet(@PathVariable("userid") String userid, @PathVariable("planid") String planid) {
-		return mobileServices.rechargeUserById(userid,planid);
-	}*/
+//	@GetMapping("/balance")
+//	public Balance getBalance(@RequestBody String id) {
+//		return mobileServices.getCurrentBalance(id);
+//	}
 	
-	@RequestMapping(value="/recharge",method = RequestMethod.PUT)
+//	@PutMapping("/recharge/{userid}/{planid}")
+//	public String rechargeUserGet(@PathVariable("userid") String userid, @PathVariable("planid") String planid) {
+//		return mobileServices.rechargeUserById(userid,planid);
+//	}
+	
+	@PutMapping("/recharge")
 	public String rechargeUserPut(@Validated @RequestBody Map<String,String> id) {
 		return mobileServices.rechargeUserById(id.get("userid"),id.get("planid"));
+	}
+	
+	@GetMapping("/usageinfo/{userid}")
+	public List<UsageInfo> getUsageInfo(@PathVariable("userid") String userid){
+		return mobileServices.getUsageInfoById(userid);
+	}
+	
+	@PutMapping("/setusage/{userid}")
+	public String addUsageInfo(@Validated @RequestBody Map<String,String> usage, @PathVariable("userid") String userid){
+		return mobileServices.addusage(usage,userid);
+	}
+	
+	@PostMapping("/createuser")
+	public String createUser(@Validated @RequestBody String id) {
+		return mobileServices.createNewUser(id)?"User Created":"User Creation Failed!!";
 	}
 }
