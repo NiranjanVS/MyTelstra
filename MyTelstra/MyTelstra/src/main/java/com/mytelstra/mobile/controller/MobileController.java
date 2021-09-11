@@ -37,7 +37,22 @@ public class MobileController {
 	
 	@GetMapping("/viewPlans")
 	public List<MobilePlans> viewPlans(){
-		return mobileServices.viewPlans();
+		return mobileServices.viewAllPlans();
+	}
+	
+	@GetMapping("/viewPlans/{id}")
+	public List<MobilePlans> viewPlansById(@PathVariable("id") String userid){
+		return mobileServices.viewPlans(userid);
+	}
+	
+	@GetMapping("/viewBasePlans")
+	public List<MobilePlans> viewBasePlans(){
+		return mobileServices.viewBasePlans();
+	}
+	
+	@GetMapping("/viewAddonPlans")
+	public List<MobilePlans> viewAddOn(){
+		return mobileServices.viewAddonPlans();
 	}
 	
 	@GetMapping("/users")
@@ -46,7 +61,7 @@ public class MobileController {
 	}
 	
 	@GetMapping("/userDetails/{id}")
-	public UserInfo userdetailsByID(@PathVariable("id") String id){
+	public UserInfo getUserDetailsByID(@PathVariable("id") String id){
 		return mobileServices.getUserById(id);
 	}
 	
@@ -56,7 +71,7 @@ public class MobileController {
 //	}
 	
 	@GetMapping("/rechargeHistory/{id}")
-	public List<RechargeInfo> userrechargehistoryById(@PathVariable("id") String id){
+	public List<RechargeInfo> userRechargeHistoryById(@PathVariable("id") String id){
 		return mobileServices.userRechargeHistory(id);
 	}
 	
@@ -65,9 +80,14 @@ public class MobileController {
 //		return mobileServices.userRechargeHistory(id);
 //	}
 	
-	@GetMapping("/mobilePlan/{id}")
-	public MobilePlans viewPlanByID(@PathVariable("id") String id) {
-		return mobileServices.getMobilePlanById(id);
+	@GetMapping("/mobileBasePlan/{id}")
+	public MobilePlans viewBasePlanByID(@PathVariable("id") String id) {
+		return mobileServices.getBaseMobilePlanById(id);
+	}
+	
+	@GetMapping("/mobileAddonPlan/{id}")
+	public MobilePlans viewAddonPlanByID(@PathVariable("id") String id) {
+		return mobileServices.getAddonMobilePlanById(id);
 	}
 	
 	@GetMapping("/currentPlan/{id}")
@@ -96,9 +116,10 @@ public class MobileController {
 //	}
 	
 	@PutMapping("/recharge")
-	public String rechargeUserPut(@Validated @RequestBody Map<String,String> id) {
+	public String rechargeUserBase(@Validated @RequestBody Map<String,String> id) {
 		return mobileServices.rechargeUserById(id.get("userid"),id.get("planid"));
 	}
+	
 	
 	@GetMapping("/usageinfo/{userid}")
 	public List<UsageInfo> getUsageInfo(@PathVariable("userid") String userid){

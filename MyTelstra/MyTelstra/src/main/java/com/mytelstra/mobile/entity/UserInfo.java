@@ -9,6 +9,7 @@ public class UserInfo {
 	private String id;
 	private String mobilenumber;
 	private String username;
+	private boolean basePackActive;
 	private List<RechargeInfo> planshistory;
 	private List<ActivePlan> activeplan;
 	private Balance balance;
@@ -18,12 +19,13 @@ public class UserInfo {
 		super();
 	}
 
-	public UserInfo(String id, String mobilenumber, String username, List<RechargeInfo> planshistory,
-			List<ActivePlan> activeplan, Balance balance, List<UsageInfo> usage) {
+	public UserInfo(String id, String mobilenumber, String username, boolean basePackActive,
+			List<RechargeInfo> planshistory, List<ActivePlan> activeplan, Balance balance, List<UsageInfo> usage) {
 		super();
 		this.id = id;
 		this.mobilenumber = mobilenumber;
 		this.username = username;
+		this.basePackActive = basePackActive;
 		this.planshistory = planshistory;
 		this.activeplan = activeplan;
 		this.balance = balance;
@@ -52,6 +54,14 @@ public class UserInfo {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public boolean isBasePackActive() {
+		return basePackActive;
+	}
+
+	public void setBasePackActive(boolean basePackActive) {
+		this.basePackActive = basePackActive;
 	}
 
 	public List<RechargeInfo> getPlanshistory() {
@@ -88,7 +98,8 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		return "UserInfo [id=" + id + ", mobilenumber=" + mobilenumber + ", username=" + username + ", planshistory="
-				+ planshistory + ", activeplan=" + activeplan + ", balance=" + balance + ", usage=" + usage + "]";
+		return "UserInfo [id=" + id + ", mobilenumber=" + mobilenumber + ", username=" + username + ", basePackActive="
+				+ basePackActive + ", planshistory=" + planshistory + ", activeplan=" + activeplan + ", balance="
+				+ balance + ", usage=" + usage + "]";
 	}
 }

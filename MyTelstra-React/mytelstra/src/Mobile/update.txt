@@ -1,0 +1,22 @@
+            import MobileCheckOut from 'Mobile/mobilePayment/checkout';
+import ViewMobilePlans from 'Mobile/viewPlans/viewPlans'
+import ViewTransactionHistory from 'Mobile/viewTransactionHistory/viewTransactionHistoy';
+import ViewActiveMobilePlans from 'Mobile/activePlans/viewActivePlans';
+import ViewUsageHistory from 'Mobile/viewUsageHistory/viewUsageHistory';
+            
+            
+            <Route exact path="/Broadband" component={(props) => <ViewPlans authenticated={this.state.authenticated} user = {this.state.currentUser} {...props}/>}></Route>
+            <PrivateRoute exact path="/Broadband/newConnection" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={(props) => <AddressForm authenticated={this.state.authenticated} user = {this.state.currentUser} {...props}/>}></PrivateRoute>
+
+            <PrivateRouteNew exact path="/Broadband/viewPlans" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={(props) => <ViewPlans authenticated={this.state.authenticated} {...props}/>}></PrivateRouteNew>
+
+            <PrivateRouteNew path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={(props) => <Profile authenticated={this.state.authenticated} {...props}/>}></PrivateRouteNew>
+
+            <PrivateRouteNew path="/Broadband/Payment" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={(props) => <Checkout newPlan = {this.props.newPlan} {...props}/>}></PrivateRouteNew>
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>

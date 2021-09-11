@@ -2,140 +2,130 @@
   "_id": "10001",
   "mobilenumber" : "7485596142",
   "username": "Niranjan V S",
-  "planshistory": [
-    {
-      "planID": "TELMOB20210001",
-      "dateOfRecharge": "30/08/2021",
-      "dateOfExpiry": "27/09/2021",
-      "transactionId": "66f54c01-0f2d-4c6e-8b66-955fde2cadc2",
-      "paymentMode": "online"
-    }
-  ],
-  "activeplan": {
-    "planID": "TELMOB20210001",
-    "dateOfRecharge": "30/08/2021",
-    "dateOfExpiry": "27/09/2021",
-    "transactionId": "66f54c01-0f2d-4c6e-8b66-955fde2cadc2",
-    "paymentMode": "online"
+  "basePackActive":false,
+  "planshistory": [],
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
   },
-  "dataremaining": 56,
-  "voiceremaining": 1000,
-  "smsremaining": 100
+  "usage":[]
 },{
   "_id": "10002",
   "mobilenumber":"9587436514",
   "username": "Aishrith Rao",
-  "planshistory": [
-    {
-      "planID": "TELMOB20210005",
-      "dateOfRecharge": "30/08/2021",
-      "dateOfExpiry": "25/10/2021",
-      "transactionId": "a6bcca55-4ef4-4782-8026-d019226953a3",
-      "paymentMode": "online"
-    }
-  ],
-  "activeplan": {
-    "planID": "TELMOB20210005",
-    "dateOfRecharge": "30/08/2021",
-    "dateOfExpiry": "25/10/2021",
-    "transactionId": "a6bcca55-4ef4-4782-8026-d019226953a3",
-    "paymentMode": "online"
+  "basePackActive":false,
+  "planshistory": [],
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
   },
-  "dataremaining": 84,
-  "voiceremaining": 2000,
-  "smsremaining": 100
+  "usage":[]
 },{
   "_id": "10003",
   "mobilenumber": "8521476295",
   "username": "Rohith Reddy",
-  "planshistory": [
-    {
-      "planID": "TELMOB20210002",
-      "dateOfRecharge": "30/08/2021",
-      "dateOfExpiry": "25/10/2021",
-      "transactionId": "9d5e96a2-a7b7-4458-9772-78cfd51d4415",
-      "paymentMode": "online"
-    }
-  ],
-  "activeplan": {
-    "planID": "TELMOB20210002",
-    "dateOfRecharge": "30/08/2021",
-    "dateOfExpiry": "25/10/2021",
-    "transactionId": "9d5e96a2-a7b7-4458-9772-78cfd51d4415",
-    "paymentMode": "online"
+  "basePackActive":false,
+  "planshistory": [],
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
   },
-  "dataremaining": 112,
-  "voiceremaining": 2000,
-  "smsremaining": 100
+  "usage":[]
 },{
   "_id": "10004",
   "mobilenumber": "9987748625",
   "username": "Raghavendra J C",
+  "basePackActive":false,
   "planshistory": [],
-  "dataremaining": 0,
-  "voiceremaining": 0,
-  "smsremaining": 0
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
+  },
+  "usage":[]
 },{
   "_id": "10005",
   "mobilenumber": "8625741965",
   "username": "Yamuna",
-  "planshistory": [
-    {
-      "planID": "TELMOB20210001",
-      "dateOfRecharge": "30/08/2021",
-      "dateOfExpiry": "27/09/2021",
-      "transactionId": "661f8b34-8ea2-4336-b41c-8826060cfe72",
-      "paymentMode": "online"
-    }
-  ],
-  "activeplan": {
-    "planID": "TELMOB20210001",
-    "dateOfRecharge": "30/08/2021",
-    "dateOfExpiry": "27/09/2021",
-    "transactionId": "661f8b34-8ea2-4336-b41c-8826060cfe72",
-    "paymentMode": "online"
+  "basePackActive":false,
+  "planshistory": [],
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
   },
-  "dataremaining": 56,
-  "voiceremaining": 1000,
-  "smsremaining": 100
+  "usage":[]
 },{
   "_id": "10006",
   "mobilenumber": "9958476147",
   "username": "Raghavendra Ganapathi",
+  "basePackActive":false,
   "planshistory": [],
-  "dataremaining": 0,
-  "voiceremaining": 0,
-  "smsremaining": 0
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
+  },
+  "usage":[]
 },{
   "_id": "10007",
   "mobilenumber": "8573945618",
   "username": "Shubha",
+  "basePackActive":false,
   "planshistory": [],
-  "dataremaining": 0,
-  "voiceremaining": 0,
-  "smsremaining": 0
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
+  },
+  "usage":[]
 },{
   "_id": "10008",
   "mobilenumber": "6849752864",
   "username": "Obed Junias",
+  "basePackActive":false,
   "planshistory": [],
-  "dataremaining": 0,
-  "voiceremaining": 0,
-  "smsremaining": 0
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
+  },
+  "usage":[]
 },{
   "_id": "10009",
   "mobilenumber": "8579431085",
   "username": "Tejaswini",
+  "basePackActive":false,
   "planshistory": [],
-  "dataremaining": 0,
-  "voiceremaining": 0,
-  "smsremaining": 0
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
+  },
+  "usage":[]
 },{
   "_id": "10010",
   "mobilenumber": "8957617538",
   "username": "Tarun M Krishna",
+  "basePackActive":false,
   "planshistory": [],
-  "dataremaining": 0,
-  "voiceremaining": 0,
-  "smsremaining": 0
+  "activeplan": [],
+  "balance":{
+    "data":0.0,
+    "voice":0,
+    "sms":0
+  },
+  "usage":[]
 }]

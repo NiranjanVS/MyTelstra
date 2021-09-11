@@ -11,6 +11,7 @@ public class MobilePlans {
 	private int data;
 	private int voice;
 	private int sms;
+	private String plantype;
 	
 	
 	public MobilePlans() {
@@ -18,7 +19,7 @@ public class MobilePlans {
 	}
 
 
-	public MobilePlans(String id, String plan, int duration, int price, int data, int voice, int sms) {
+	public MobilePlans(String id, String plan, int duration, int price, int data, int voice, int sms, String plantype) {
 		super();
 		this.id = id;
 		this.plan = plan;
@@ -27,6 +28,7 @@ public class MobilePlans {
 		this.data = data;
 		this.voice = voice;
 		this.sms = sms;
+		this.plantype = plantype;
 	}
 
 
@@ -100,10 +102,21 @@ public class MobilePlans {
 	}
 
 
+	public String getPlantype() {
+		return plantype;
+	}
+
+
+	public void setPlantype(String plantype) {
+		this.plantype = plantype;
+	}
+
+
 	@Override
 	public String toString() {
 		return "MobilePlans [id=" + id + ", plan=" + plan + ", duration=" + duration + ", price=" + price + ", data="
-				+ data + ", voice=" + voice + ", sms=" + sms + "]";
+				+ data + ", voice=" + voice + ", sms=" + sms + ", plantype=" + plantype + "]";
 	}
+	
 	
 }

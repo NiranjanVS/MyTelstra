@@ -27,6 +27,8 @@ import com.mytelstra.mobile.entity.UserInfo;
 import com.mytelstra.mobile.repository.MobileRepository;
 import com.mytelstra.mobile.repository.UserRepository;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 
 @Service
 public class MobileServicesImpl implements MobileServices{
@@ -61,11 +63,32 @@ public class MobileServicesImpl implements MobileServices{
 	}
 	
 	@Override
-	public List<MobilePlans> viewPlans() {
+	public List<MobilePlans> viewBasePlans() {
 		
-		List<MobilePlans> mobileplans = mobilerepo.findAll();
+		List<MobilePlans> mobileplans = mobilerepo.findBasePlans();
 		return mobileplans;
 	}
+	
+	@Override
+	public List<MobilePlans> viewAddonPlans() {
+		List<MobilePlans> mobileplans = mobilerepo.findAddonPlans();
+		return mobileplans;
+	}
+	
+	@Override
+	public List<MobilePlans> viewPlans(String userid) {
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
+		if(userinfo.isPresent() && userinfo.get().isBasePackActive()) {
+			return viewAddonPlans();
+		}
+		
+		return viewBasePlans();
+	}	
+	
+	@Override
+	public List<MobilePlans> viewAllPlans() {
+		return mobilerepo.findAll();
+	}	
 
 	@Override
 	public List<UserInfo> userinfo() {
@@ -75,18 +98,18 @@ public class MobileServicesImpl implements MobileServices{
 	}
 
 	@Override
-	public List<RechargeInfo> userRechargeHistory(String id) {
-		Optional<UserInfo> userinfo = userrepo.findById(id);
+	public List<RechargeInfo> userRechargeHistory(String userid) {
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		if(!userinfo.isPresent())
-			return null;
+			return new ArrayList<>();
 		
 		return userinfo.get().getPlanshistory();
 	}
 
 
 	@Override
-	public UserInfo getUserById(String id) {
-		Optional<UserInfo> userinfo = userrepo.findById(id);
+	public UserInfo getUserById(String userid) {
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		if(!userinfo.isPresent())
 			return new UserInfo();
 		
@@ -94,8 +117,17 @@ public class MobileServicesImpl implements MobileServices{
 	}
 
 	@Override
-	public MobilePlans getMobilePlanById(String id) {
-		Optional<MobilePlans> planinfo = mobilerepo.findById(id);
+	public MobilePlans getBaseMobilePlanById(String planid) {
+		Optional<MobilePlans> planinfo = mobilerepo.findBasePlanById(planid);
+		if(!planinfo.isPresent())
+			return new MobilePlans();
+		
+		return planinfo.get();
+	}
+	
+	@Override
+	public MobilePlans getAddonMobilePlanById(String planid) {
+		Optional<MobilePlans> planinfo = mobilerepo.findAddonPlanById(planid);
 		if(!planinfo.isPresent())
 			return new MobilePlans();
 		
@@ -103,8 +135,8 @@ public class MobileServicesImpl implements MobileServices{
 	}
 
 	@Override
-	public List<ActivePlan> getCurrentPlan(String id) {
-		Optional<UserInfo> userinfo = userrepo.findById(id);
+	public List<ActivePlan> getCurrentPlan(String userid) {
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		if(!userinfo.isPresent() || userinfo.get().getActiveplan()==null)
 			return new ArrayList<>();
 		
@@ -112,11 +144,11 @@ public class MobileServicesImpl implements MobileServices{
 	}
 
 	@Override
-	public Balance getCurrentBalance(String id) {
+	public Balance getCurrentBalance(String userid) {
 				
-		Optional<UserInfo> userinfo = userrepo.findById(id);
+		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		if(!userinfo.isPresent())
-			return null;
+			return new Balance();
 		
 		return userinfo.get().getBalance();
 	}
@@ -131,8 +163,18 @@ public class MobileServicesImpl implements MobileServices{
 			userinfo = userrepo.findById(userid);
 		}
 		
-		if(!planinfo.isPresent())
+		if(planinfo.isPresent()) {
+			if(planinfo.get().getPlantype().equals("base") && userinfo.get().isBasePackActive()) {
+				return "You already have a base plan";
+			}
+			else if(planinfo.get().getPlantype().equals("addon") && !userinfo.get().isBasePackActive()){
+				return "You do not have a base pack";
+			}
+		}
+		
+		else {
 			return "No Such Plans Exist";
+		}
 		
 		
 		UserInfo user = userinfo.get();
@@ -140,32 +182,25 @@ public class MobileServicesImpl implements MobileServices{
 		String pattern = "dd/MM/yyyy";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String today = simpleDateFormat.format(new Date());
-		
-		/*Date currentPlanExpiry = null;
-		
-		Date todate = new Date();
-		if(user.getActiveplan()!=null) {
-
+		String lastDate;
+			
+		if(!userinfo.get().isBasePackActive()) {
+			System.out.println(userinfo.get().isBasePackActive());
+			System.out.println("Entered Wrong");
+			Calendar cal = Calendar.getInstance();
 			try {
-				currentPlanExpiry = simpleDateFormat.parse(user.getActiveplan().getDateOfExpiry());
-			} catch (ParseException e1) {
-				e1.printStackTrace();
+				cal.setTime(simpleDateFormat.parse(today));
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
-			if(todate.compareTo(currentPlanExpiry)<=0) {
-				return "Recharge Failed  - You Have an Active Plan";
-			}
-		}*/
-		
-		
-		Calendar cal = Calendar.getInstance();
-		try {
-			cal.setTime(simpleDateFormat.parse(today));
-		} catch (ParseException e) {
-			e.printStackTrace();
+			
+			cal.add(Calendar.DAY_OF_MONTH, planinfo.get().getDuration());
+			lastDate = simpleDateFormat.format(cal.getTime());
 		}
-		cal.add(Calendar.DAY_OF_MONTH, planinfo.get().getDuration());
 		
-		String lastDate = simpleDateFormat.format(cal.getTime());
+		else {
+			lastDate = userinfo.get().getActiveplan().get(0).getDateOfExpiry();
+		}
 		
 		System.out.println(today);
 		System.out.println(planinfo.get().getDuration());
@@ -200,6 +235,8 @@ public class MobileServicesImpl implements MobileServices{
 		
 		user.setBalance(balance);
 		
+		user.setBasePackActive(true);
+		
 		userrepo.save(user);
 		System.out.println(user);
 		
@@ -210,7 +247,7 @@ public class MobileServicesImpl implements MobileServices{
 	public List<UsageInfo> getUsageInfoById(String userid) {
 		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		if(!userinfo.isPresent())
-			return null;
+			return new ArrayList<>();
 		return userinfo.get().getUsage();
 	}
 
@@ -219,14 +256,14 @@ public class MobileServicesImpl implements MobileServices{
 		
 		Optional<UserInfo> userinfo = userrepo.findById(userid);
 		if(!userinfo.isPresent())
-			return "No user found";
+			return "Failed - No user found";
 		
 		UsageInfo newusage = new UsageInfo();
 		newusage.setType(usage.get("type").toLowerCase());
 		
 		if(usage.get("type").equalsIgnoreCase("data")) {
 			if((userinfo.get().getBalance().getData()*1024 - Double.parseDouble(usage.get("quantity")))<0) {
-				return "You have Exhausted your data";
+				return "Failed - You have Exhausted your data";
 			}
 			userinfo.get().getBalance().setData((userinfo.get().getBalance().getData()*1024 - Double.parseDouble(usage.get("quantity")))/1024);
 			newusage.setQuantity(usage.get("quantity")+" MB");
@@ -234,7 +271,7 @@ public class MobileServicesImpl implements MobileServices{
 		
 		else if(usage.get("type").equalsIgnoreCase("voice")) {
 			if((userinfo.get().getBalance().getVoice() - Integer.parseInt(usage.get("quantity")))<0) {
-				return "You have Exhausted your Voice Minutes";
+				return "Failed - You have Exhausted your Voice Minutes";
 			}
 			userinfo.get().getBalance().setVoice(userinfo.get().getBalance().getVoice() - Integer.parseInt(usage.get("quantity")));
 			newusage.setQuantity(usage.get("quantity")+" Min");
@@ -242,10 +279,14 @@ public class MobileServicesImpl implements MobileServices{
 		
 		else if(usage.get("type").equalsIgnoreCase("sms")) {
 			if((userinfo.get().getBalance().getSms() - Integer.parseInt(usage.get("quantity")))<0) {
-				return "You have Exhausted your SMS";
+				return "Failed - You have Exhausted your SMS";
 			}
 			userinfo.get().getBalance().setSms(userinfo.get().getBalance().getSms() - Integer.parseInt(usage.get("quantity")));
 			newusage.setQuantity(usage.get("quantity"));
+		}
+		
+		else {
+			return "Failed - Invalid Usage Type";
 		}
 		
 		String pattern = "dd/MM/yyyy HH:mm:ss";
@@ -261,8 +302,6 @@ public class MobileServicesImpl implements MobileServices{
 		userinfo.get().getUsage().add(newusage);
 		userrepo.save(userinfo.get());
 		
-		return "success";
+		return "Usage Update - Success";
 	}
-	
-	
 }
