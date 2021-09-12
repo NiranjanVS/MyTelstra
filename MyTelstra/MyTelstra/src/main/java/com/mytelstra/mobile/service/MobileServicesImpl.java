@@ -167,7 +167,7 @@ public class MobileServicesImpl implements MobileServices{
 			if(planinfo.get().getPlantype().equals("base") && userinfo.get().isBasePackActive()) {
 				return "You already have a base plan";
 			}
-			else if(planinfo.get().getPlantype().equals("addon") && !userinfo.get().isBasePackActive()){
+			else if(planinfo.get().getPlantype().equals("add-on") && !userinfo.get().isBasePackActive()){
 				return "You do not have a base pack";
 			}
 		}

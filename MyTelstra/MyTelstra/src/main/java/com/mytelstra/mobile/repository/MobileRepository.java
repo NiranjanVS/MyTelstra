@@ -11,12 +11,12 @@ import com.mytelstra.mobile.entity.UserInfo;
 
 @Repository
 public interface MobileRepository extends MongoRepository<MobilePlans, String> {
-	@Query(value="{'plantype':'base'}")
+	@Query(value="{'plantype':'Base'}")
 	List<MobilePlans> findBasePlans();
-	@Query(value="{'plantype':'addon'}")
+	@Query(value="{'plantype':'Add-On'}")
 	List<MobilePlans> findAddonPlans();
-	@Query(value="{'id' : ?0,'plantype':'base' }")
+	@Query(value="{'id' : ?0,'plantype':'Base' }")
 	Optional<MobilePlans> findBasePlanById(String id);
-	@Query(value="{'id' : ?0,'plantype':'addon' }")
+	@Query(value="{'id' : ?0,'plantype':'Add-On' }")
 	Optional<MobilePlans> findAddonPlanById(String id);
 }
