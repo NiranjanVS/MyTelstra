@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="UserInformation")
+@Document(collection="MobileUserInformation")
 public class UserInfo {
 	private String id;
 	private String mobilenumber;
