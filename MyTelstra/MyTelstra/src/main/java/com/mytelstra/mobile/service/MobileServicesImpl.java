@@ -64,7 +64,7 @@ public class MobileServicesImpl implements MobileServices{
 	
 	@Override
 	public List<MobilePlans> viewBasePlans() {
-		
+		System.out.println("inside base");
 		List<MobilePlans> mobileplans = mobilerepo.findBasePlans();
 		return mobileplans;
 	}

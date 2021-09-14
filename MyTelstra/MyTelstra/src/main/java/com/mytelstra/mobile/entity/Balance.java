@@ -38,4 +38,5 @@ public class Balance {
 	public String toString() {
 		return "Balance [data=" + data + ", voice=" + voice + ", sms=" + sms + "]";
 	}
+	
 }
