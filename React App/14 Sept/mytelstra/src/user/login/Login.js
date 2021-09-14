@@ -102,8 +102,9 @@ class LoginForm extends Component {
             console.log(localStorage.getItem(USER));
             var x= JSON.parse(localStorage.getItem(USER));
             Alert.success("You're successfully logged in!");
+            console.log("1.1.1.1.1")
             this.props.history.push({
-                pathname: "/home",
+                pathname: "/welcome",
                 authenticated: localStorage.getItem(UserAuthenticated),
                 currentUser: x
             })

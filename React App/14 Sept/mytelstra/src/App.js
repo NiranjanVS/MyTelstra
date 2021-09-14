@@ -13,12 +13,13 @@ import RegisterPage from 'views/examples/RegisterPage';
 import LandingPage from 'views/examples/LandingPage';
 import ViewItems from 'shop/displayItems';
 import ViewMobileDashboard from 'Mobile/Dashboard/view';
+import User from 'profilecard';
 
 
 function App() {
   return(
     <div>
-      <ViewMobileDashboard />
+      <User/>
     </div>
   );
 }

@@ -33,6 +33,8 @@ import ViewPlansHistory from 'Broadband/viewPlansHistory/viewTransactionHistoy';
 import ViewPlansChart from 'Mobile/plansChart/viewPlansChart';
 import ViewBillDetails from 'Broadband/billdetails/ViewBillDetails';
 import ViewMobileDashboard from 'Mobile/Dashboard/view';
+import ViewProfile from 'profile';
+import Loginsuccessful from 'sample';
 
 class App extends Component {
   
@@ -94,7 +96,7 @@ class App extends Component {
       <div className="app">
         <div className="app-body">
           <Switch>
-
+          <Route exact path="/welcome" component={Loginsuccessful}></Route>
           <Route exact path="/Broadband" component={(props) => <ViewPlans authenticated={this.state.authenticated} user = {this.state.currentUser} {...props}/>}></Route>
             <PrivateRouteNew exact path="/Broadband/newConnection" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={(props) => <AddressForm authenticated={this.state.authenticated} user = {this.state.currentUser} {...props}/>}></PrivateRouteNew>
@@ -110,6 +112,9 @@ class App extends Component {
 
             <PrivateRouteNew path="/profile" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={(props) => <Profile authenticated={this.state.authenticated} {...props}/>}></PrivateRouteNew>
+            
+            <PrivateRouteNew path="/profiletwo" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
+              component={(props) => <ViewProfile authenticated={this.state.authenticated} {...props}/>}></PrivateRouteNew>
 
             <PrivateRouteNew path="/Broadband/Payment" authenticated={this.state.authenticated} currentUser={this.state.currentUser}
               component={(props) => <Checkout newPlan = {this.props.newPlan} {...props}/>}></PrivateRouteNew>
